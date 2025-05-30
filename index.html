@@ -8,31 +8,23 @@
     body {
       margin: 0;
       background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
 
     .video-wrapper {
       width: 100%;
-      height: 20vh; /* Final visible band height */
+      height: 20vh; /* Letterbox height */
       overflow: hidden;
       position: relative;
     }
 
     video {
-      width: 100%;
-      height: 100vh; /* Full height so we can crop */
+      width: 100vw;
+      height: auto;
+      min-height: 300vh; /* Big enough to crop top/bottom cleanly */
+      position: absolute;
+      top: -40vh; /* Crop 40vh off the top */
+      left: 0;
       object-fit: cover;
-      transform: translateY(-40%); /* Shift video up by 40% to crop top */
-    }
-
-    .fallback {
-      display: none;
-      text-align: center;
-      font-size: 2rem;
-      padding: 1rem;
     }
   </style>
 </head>
@@ -44,14 +36,11 @@
     </video>
   </div>
 
-  <div class="fallback" id="fallback">Welcome to the SharePoint Title</div>
-
   <script>
     function freezeLastFrame() {
       const video = document.getElementById('heroVideo');
       video.pause();
-      video.currentTime = video.duration - 0.1;
-      document.getElementById('fallback').style.display = 'block';
+      video.currentTime = video.duration - 0.1; // stops on the last clean frame
     }
   </script>
 </body>
