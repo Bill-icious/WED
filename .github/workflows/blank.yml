@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SharePoint Video Autoplay</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    video {
+      max-width: 100%;
+      height: auto;
+    }
+    .fallback {
+      display: none;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <video id="heroVideo" autoplay muted playsinline onended="freezeLastFrame()">
+    <source src="video.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <div class="fallback" id="fallback">Video complete – Welcome to SharePoint Page Title</div>
+
+  <script>
+    function freezeLastFrame() {
+      const video = document.getElementById('heroVideo');
+      video.pause();
+      video.currentTime = video.duration - 0.1; // Freeze at final frame
+      document.getElementById('fallback').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
