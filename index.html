@@ -27,36 +27,36 @@
       object-fit: cover;
       position: absolute;
       top: -10vh;
-      opacity: 0; /* Start hidden */
-      transition: opacity 0.5s ease-in;
-    }
-
-    video.visible {
-      opacity: 1;
     }
   </style>
 </head>
 <body>
   <div class="video-wrapper">
-    <video id="heroVideo" muted playsinline onended="freezeLastFrame()">
+    <video id="heroVideo" muted playsinline preload="auto" onended="freezeLastFrame()">
       <source src="Rolling globe title AHECO.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
   </div>
 
   <script>
+    const video = document.getElementById('heroVideo');
+
     function freezeLastFrame() {
-      const video = document.getElementById('heroVideo');
       video.pause();
       video.currentTime = video.duration - 0.1;
     }
 
     window.addEventListener('load', () => {
-      const video = document.getElementById('heroVideo');
+      // Load first frame without playing
+      video.addEventListener('loadeddata', () => {
+        video.pause(); // Ensure it's not auto-playing
+        video.currentTime = 0; // Go to first frame
+      });
+
+      // Wait 2 seconds, then play
       setTimeout(() => {
-        video.classList.add('visible');
         video.play();
-      }, 2000); // Delay 2 seconds
+      }, 2000);
     });
   </script>
 </body>
