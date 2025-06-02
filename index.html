@@ -8,51 +8,64 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
+    /* Container that will always keep a 1920×476 ratio */
     .video-container {
       position: relative;
       width: 100%;
-      max-width: 1920px;
-      aspect-ratio: 1920 / 476;
-      overflow: hidden;
+      max-width: 1920px;       /* never expand beyond native width */
+      margin: 0 auto;          /* center horizontally */
+    }
+    .video-container::before {
+      content: "";
+      display: block;
+      /* (476 ÷ 1920) × 100% ≃ 24.7916667% */
+      padding-top: 24.7916667%;
     }
 
-    video {
+    /* The <video> absolutely fills the container */
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover;       /* no distortion; since container ≈ video ratio, it will show the full frame */
       display: block;
     }
   </style>
 </head>
 <body>
   <div class="video-container">
-    <video id="heroVideo" muted playsinline preload="auto" onended="freezeLastFrame()">
+    <video
+      id="heroVideo"
+      muted
+      playsinline
+      preload="auto"
+      onended="freezeLastFrame()"
+    >
       <source src="Rolling globe title AHECO.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
   </div>
 
   <script>
-    const video = document.getElementById('heroVideo');
+    const video = document.getElementById("heroVideo");
 
     function freezeLastFrame() {
       video.pause();
       video.currentTime = video.duration - 0.1;
     }
 
-    window.addEventListener('load', () => {
-      video.addEventListener('loadeddata', () => {
+    window.addEventListener("load", () => {
+      video.addEventListener("loadeddata", () => {
         video.pause();
         video.currentTime = 0;
       });
 
+      // wait 2 seconds, then play
       setTimeout(() => {
         video.play();
       }, 2000);
