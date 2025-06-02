@@ -8,17 +8,17 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100vh;
+      height: 100%;
       background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .video-wrapper {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100vw;
-      height: auto;
-      transform: translate(-50%, -50%);
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 1920px;
       aspect-ratio: 1920 / 476;
       overflow: hidden;
     }
@@ -32,7 +32,7 @@
   </style>
 </head>
 <body>
-  <div class="video-wrapper">
+  <div class="video-container">
     <video id="heroVideo" muted playsinline preload="auto" onended="freezeLastFrame()">
       <source src="Rolling globe title AHECO.mp4" type="video/mp4" />
       Your browser does not support the video tag.
